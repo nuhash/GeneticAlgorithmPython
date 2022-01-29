@@ -1141,6 +1141,7 @@ class GA:
 
         if self.valid_parameters == False:
             raise ValueError("ERROR calling the cal_pop_fitness() method: \nPlease check the parameters passed while creating an instance of the GA class.\n")
+        self.on_generation(self)
 
         pop_fitness = []
         # Calculating the fitness value of each solution in the current population.
@@ -1256,7 +1257,7 @@ class GA:
                 self.population[parents_to_keep.shape[0]:, :] = self.last_generation_offspring_mutation
 
             self.generations_completed = generation + 1 # The generations_completed attribute holds the number of the last completed generation.
-            self.on_mutation(self, self.last_generation_offspring_mutation)
+            
             # Measuring the fitness of each chromosome in the population. Save the fitness in the last_generation_fitness attribute.
             self.last_generation_fitness = self.cal_pop_fitness()
 
@@ -2099,6 +2100,8 @@ class GA:
         temp_population[len(parents_to_keep):, :] = offspring
 
         fitness[:self.last_generation_parents.shape[0]] = self.last_generation_fitness[self.last_generation_parents_indices]
+        
+        self.on_mutation(self,temp_population)
 
         for idx in range(len(parents_to_keep), fitness.shape[0]):
             fitness[idx] = self.fitness_func(temp_population[idx], None)
