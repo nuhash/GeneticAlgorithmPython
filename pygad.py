@@ -1256,7 +1256,7 @@ class GA:
                 self.population[parents_to_keep.shape[0]:, :] = self.last_generation_offspring_mutation
 
             self.generations_completed = generation + 1 # The generations_completed attribute holds the number of the last completed generation.
-
+            self.on_mutation(self, self.last_generation_offspring_mutation)
             # Measuring the fitness of each chromosome in the population. Save the fitness in the last_generation_fitness attribute.
             self.last_generation_fitness = self.cal_pop_fitness()
 
